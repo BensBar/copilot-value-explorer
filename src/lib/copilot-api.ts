@@ -1,4 +1,6 @@
-const GITHUB_API_BASE = "https://api.github.com";
+import { Octokit } from "@octokit/core";
+
+const octokit = new Octokit();
 
 export interface CopilotMetricsResponse {
   total_active_users: number;
@@ -44,48 +46,40 @@ export interface CopilotSeatsResponse {
   }>;
 }
 
-function getAuthHeaders(): HeadersInit {
-  const token = process.env.GITHUB_TOKEN;
-  if (!token) {
-    throw new Error("GITHUB_TOKEN environment variable is not set");
-  }
-  return {
-    Authorization: `Bearer ${token}`,
-    Accept: "application/vnd.github+json",
-    "X-GitHub-Api-Version": "2022-11-28",
-  };
-}
-
 export async function getCopilotMetrics(): Promise<CopilotMetricsResponse[]> {
-  const response = await fetch(
-    `${GITHUB_API_BASE}/enterprises/octodemo/copilot/metrics`,
+  const response = await octokit.request(
+    "GET /enterprises/{enterprise}/copilot/metrics",
     {
-      method: "GET",
-      headers: getAuthHeaders(),
+      enterprise: "octodemo",
+      headers: {
+        "X-GitHub-Api-Version": "2022-11-28",
+      },
     }
   );
 
-  if (!response.ok) {
+  if (response.status !== 200) {
     throw new Error(`GitHub API error: ${response.status}`);
   }
 
-  return response.json();
+  return response.data as CopilotMetricsResponse[];
 }
 
 export async function getCopilotSeats(): Promise<CopilotSeatsResponse> {
-  const response = await fetch(
-    `${GITHUB_API_BASE}/enterprises/octodemo/copilot/billing/seats`,
+  const response = await octokit.request(
+    "GET /enterprises/{enterprise}/copilot/billing/seats",
     {
-      method: "GET",
-      headers: getAuthHeaders(),
+      enterprise: "octodemo",
+      headers: {
+        "X-GitHub-Api-Version": "2022-11-28",
+      },
     }
   );
 
-  if (!response.ok) {
+  if (response.status !== 200) {
     throw new Error(`GitHub API error: ${response.status}`);
   }
 
-  return response.json();
+  return response.data as CopilotSeatsResponse;
 }
 
 export interface CopilotMetrics {
