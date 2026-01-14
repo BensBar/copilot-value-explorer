@@ -40,6 +40,15 @@ A dashboard application that visualizes GitHub Copilot business value and adopti
 - **Zero Seats**: Handle division by zero gracefully with "No data" message
 - **Missing Data Points**: Chart handles gaps in 7-day data gracefully
 
+## Data Source
+
+Currently using realistic mock data that simulates the GitHub Enterprise Copilot API responses. The mock data generates:
+- 28 days of metrics history with realistic usage patterns
+- 10 sample user seats with varied activity levels
+- Editor distribution across VS Code, JetBrains, and Neovim
+
+Note: The actual GitHub API endpoints (`/enterprises/{enterprise}/copilot/metrics` and `/enterprises/{enterprise}/copilot/billing/seats`) require enterprise admin authentication which is not available in the Spark runtime environment.
+
 ## Design Direction
 
 Executive dashboard aesthetic - clean, spacious, data-focused. Conveys trustworthiness and professionalism while remaining visually engaging. Uses GitHub's brand essence without being a GitHub clone.
