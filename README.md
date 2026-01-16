@@ -16,9 +16,9 @@ Right now, this is just a starting point — the perfect place to begin building
 
 This project is configured to deploy to GitHub Pages automatically:
 
-- **Live Site**: https://bensbar.github.io/copilot-value-explor
+- **Live Site**: https://copilot-value-explorer.github.io
 - **Build Output**: The `docs/` folder contains the production build
-- **Base Path**: Configured for `/copilot-value-explor/`
+- **Base Path**: Configured for root `/`
 
 ### Automated Deployment
 
